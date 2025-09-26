@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Grand Design OVOP NTT 2025-2029</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: Infografis ini disusun sebagai narasi visual tunggal yang dapat digulir. Strukturnya mengalir dari gambaran umum ke detail spesifik untuk memandu pengguna. Dimulai dengan (1) Judul yang menarik dan visi utama. Dilanjutkan dengan (2) Data kunci tentang fokus produk untuk memberikan konteks. Kemudian, (3) Tiga Pilar utama program dijelaskan untuk membangun pemahaman dasar. Setelah itu, (4) Peta Jalan 5 tahun disajikan secara visual untuk menunjukkan progresi waktu. Selanjutnya, (5) Model kolaborasi Pentahelix diilustrasikan untuk menunjukkan para pemangku kepentingan. Terakhir, (6) Analisis SWOT disajikan dalam format grid untuk analisis strategis. Alur ini menceritakan kisah lengkap OVOP NTT secara logis dan menarik. -->
+    <!-- Visualization & Content Choices: 
+        - Visi Program (Teks): Goal=Inform -> Viz=Teks besar dan tebal (HTML/CSS) -> Justification=Menyampaikan pesan utama dengan dampak maksimal.
+        - Fokus Produk Unggulan (Data): Goal=Compare -> Viz=Donut Chart (Chart.js) -> Justification=Efektif untuk menunjukkan komposisi atau proporsi kategori produk unggulan secara visual. NO SVG.
+        - 3 Pilar OVOP (Konsep): Goal=Organize -> Viz=Kartu Ikon (HTML/CSS & Unicode) -> Justification=Memecah konsep menjadi tiga bagian yang mudah dicerna dan diingat secara visual. NO SVG.
+        - Peta Jalan 2025-2029 (Proses): Goal=Change -> Viz=Timeline Vertikal (HTML/CSS) -> Justification=Cara terbaik untuk menyajikan informasi berurutan berdasarkan waktu dalam format infografis yang dapat digulir. NO SVG, NO Mermaid JS.
+        - Kolaborasi Pentahelix (Hubungan): Goal=Organize -> Viz=Diagram Hubungan (HTML/CSS Flexbox) -> Justification=Menampilkan hubungan antara entitas pusat (OVOP) dan lima pemangku kepentingan secara jelas dan terstruktur. NO SVG, NO Mermaid JS.
+        - Analisis SWOT (Analisis): Goal=Organize -> Viz=Grid 2x2 (HTML/CSS Grid) -> Justification=Format standar dan paling intuitif untuk menyajikan dan membandingkan empat elemen analisis SWOT. NO SVG.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .section-title {
+            color: #073B4C;
+            font-weight: 800;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #118AB2;
+            border: 4px solid #F8F9FA;
+        }
+    </style>
+</head>
+<body class="text-[#073B4C]">
+
+    <div class="container mx-auto px-6 py-12 md:py-20">
+
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#118AB2] uppercase">OVOP NTT</h1>
+            <p class="mt-4 text-xl md:text-2xl font-semibold text-[#073B4C]">Membangun Kemandirian Desa Melalui Produk Unggulan</p>
+            <p class="mt-2 text-lg text-gray-600 max-w-3xl mx-auto">Sebuah Grand Design untuk periode 2025-2029 yang bertujuan mewujudkan masyarakat NTT yang mandiri, kreatif, dan sejahtera.</p>
+        </header>
+
+        <!-- Section 1: Product Focus -->
+        <section class="mb-20">
+            <h2 class="section-title">Fokus Pengembangan Produk Unggulan</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-[#FF6B6B] mb-4">Distribusi Kategori Potensi</h3>
+                        <p class="text-gray-600 mb-4">Program OVOP akan memprioritaskan pengembangan produk berdasarkan potensi terbesar di desa-desa NTT. Fokus utama adalah pada produk kuliner dan pangan olahan yang memiliki nilai tambah tinggi dan potensi pasar yang luas.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full bg-[#FF6B6B] mr-3"></span>Kuliner & Pangan Olahan (40%)</li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full bg-[#FFD166] mr-3"></span>Kain Tenun & Kerajinan (30%)</li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full bg-[#06D6A0] mr-3"></span>Jasa & Pariwisata Desa (20%)</li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full bg-[#118AB2] mr-3"></span>Perkebunan & Hortikultura (10%)</li>
+                        </ul>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="productFocusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: 3 Pillars -->
+        <section class="mb-20">
+            <h2 class="section-title">Tiga Pilar Utama OVOP</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <p class="text-5xl mb-4">🌍</p>
+                    <h3 class="text-xl font-bold mb-2 text-[#06D6A0]">Berpikir Global, Bertindak Lokal</h3>
+                    <p class="text-gray-600">Menciptakan produk berkualitas global dengan tetap mempertahankan keunikan dan kearifan lokal NTT.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <p class="text-5xl mb-4">💡</p>
+                    <h3 class="text-xl font-bold mb-2 text-[#FFD166]">Kemandirian & Kreativitas</h3>
+                    <p class="text-gray-600">Memberdayakan masyarakat untuk berinovasi dan mengelola sumber daya secara mandiri dan berkelanjutan.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <p class="text-5xl mb-4">👥</p>
+                    <h3 class="text-xl font-bold mb-2 text-[#FF6B6B]">Pengembangan SDM</h3>
+                    <p class="text-gray-600">Meningkatkan kapasitas dan keterampilan masyarakat sebagai aset utama keberhasilan program.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Roadmap -->
+        <section class="mb-20">
+            <h2 class="section-title">Peta Jalan 5 Tahun</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative border-l-4 border-[#118AB2] ml-4 md:ml-0 pl-8 py-4">
+                    <div class="timeline-item mb-12">
+                        <h3 class="text-2xl font-bold text-[#118AB2]">2025: Fondasi & Pemetaan</h3>
+                        <p class="text-gray-600">Sosialisasi program, identifikasi potensi di 50 desa percontohan, dan pembentukan tim kerja di semua tingkatan.</p>
+                    </div>
+                    <div class="timeline-item mb-12">
+                        <h3 class="text-2xl font-bold text-[#118AB2]">2026: Pengembangan Kapasitas</h3>
+                        <p class="text-gray-600">Pelatihan teknis produksi, manajemen mutu, dan pendampingan intensif untuk standarisasi produk.</p>
+                    </div>
+                    <div class="timeline-item mb-12">
+                        <h3 class="text-2xl font-bold text-[#118AB2]">2027: Kualitas & Akses Pasar</h3>
+                        <p class="text-gray-600">Fasilitasi sertifikasi produk (PIRT, Halal), pengembangan branding, dan membangun kemitraan dengan pasar lokal.</p>
+                    </div>
+                    <div class="timeline-item mb-12">
+                        <h3 class="text-2xl font-bold text-[#118AB2]">2028: Perluasan & Digitalisasi</h3>
+                        <p class="text-gray-600">Perluasan program ke 50 desa baru, pelatihan pemasaran digital, dan pemanfaatan platform e-commerce.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-2xl font-bold text-[#118AB2]">2029: Keberlanjutan & Inovasi</h3>
+                        <p class="text-gray-600">Penguatan kelembagaan untuk kemandirian, mendorong inovasi produk, dan promosi di tingkat nasional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Pentahelix -->
+        <section class="mb-20">
+            <h2 class="section-title">Kolaborasi Pentahelix</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="flex flex-col items-center">
+                    <div class="bg-[#073B4C] text-white rounded-full w-32 h-32 flex items-center justify-center text-center font-bold text-lg mb-8">Program OVOP</div>
+                    <div class="w-full grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-3xl mb-2">🏛️</p><h4 class="font-bold">Pemerintah</h4><p class="text-sm text-gray-600">Regulator & Fasilitator</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-3xl mb-2">🎓</p><h4 class="font-bold">Akademisi</h4><p class="text-sm text-gray-600">Riset & Inovasi</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-3xl mb-2">💼</p><h4 class="font-bold">Bisnis</h4><p class="text-sm text-gray-600">Investor & Pasar</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-3xl mb-2">👨‍👩‍👧‍👦</p><h4 class="font-bold">Komunitas</h4><p class="text-sm text-gray-600">Pelaku Utama</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <p class="text-3xl mb-2">📰</p><h4 class="font-bold">Media</h4><p class="text-sm text-gray-600">Promosi & Publikasi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: SWOT -->
+        <section>
+            <h2 class="section-title">Analisis Strategis (SWOT)</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#06D6A0]">
+                    <h3 class="text-2xl font-bold text-[#06D6A0] mb-3">Kekuatan (Strengths)</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Kekayaan sumber daya alam & budaya</li>
+                        <li>Keunikan produk dengan kearifan lokal</li>
+                        <li>Komitmen kuat pemerintah daerah</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#FF6B6B]">
+                    <h3 class="text-2xl font-bold text-[#FF6B6B] mb-3">Kelemahan (Weaknesses)</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Keterbatasan kapasitas SDM & manajemen</li>
+                        <li>Akses terbatas ke modal & teknologi</li>
+                        <li>Infrastruktur logistik & digital belum merata</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#118AB2]">
+                    <h3 class="text-2xl font-bold text-[#118AB2] mb-3">Peluang (Opportunities)</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Tren pariwisata & permintaan produk otentik</li>
+                        <li>Dukungan kebijakan ekonomi kreatif nasional</li>
+                        <li>Potensi pasar digital & e-commerce</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#FFD166]">
+                    <h3 class="text-2xl font-bold text-[#FFD166] mb-3">Ancaman (Threats)</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Perubahan iklim & dampak pada bahan baku</li>
+                        <li>Persaingan dengan produk massal</li>
+                        <li>Perubahan selera konsumen yang cepat</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+<script>
+    const ctx = document.getElementById('productFocusChart').getContext('2d');
+    
+    function wrapLabel(str) {
+        const words = str.split(' ');
+        const lines = [];
+        let currentLine = '';
+        const maxLength = 16;
+
+        words.forEach(word => {
+            if ((currentLine + ' ' + word).trim().length > maxLength) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' ' + word).trim();
+            }
+        });
+        if (currentLine) {
+            lines.push(currentLine.trim());
+        }
+        return lines;
+    }
+
+    const originalLabels = ['Kuliner & Pangan Olahan', 'Kain Tenun & Kerajinan', 'Jasa & Pariwisata Desa', 'Perkebunan & Hortikultura'];
+    const wrappedLabels = originalLabels.map(label => wrapLabel(label));
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: wrappedLabels,
+            datasets: [{
+                label: 'Fokus Produk',
+                data: [40, 30, 20, 10],
+                backgroundColor: [
+                    '#FF6B6B',
+                    '#FFD166',
+                    '#06D6A0',
+                    '#118AB2',
+                ],
+                borderColor: '#F8F9FA',
+                borderWidth: 5,
+                hoverOffset: 10,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        },
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed + '%';
+                            }
+                            return label;
+                        }
+                    },
+                    backgroundColor: '#073B4C',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 12,
+                    cornerRadius: 8,
+                }
+            },
+            cutout: '60%',
+        }
+    });
+</script>
+
+</body>
+</html>

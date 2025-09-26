@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Design OVOP NTT - Dasbor Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The application is a single-page dashboard. The structure is designed for intuitive exploration: (1) A sticky header with navigation allows quick access to all sections. (2) "Pendahuluan" provides an overview and KPIs. (3) "Peta Jalan" uses an interactive timeline. (4) "Analisis SWOT" presents data in a structured grid. (5) "Rekomendasi" offers actionable insights. (6) Modals for audio/video summaries and direct links to the full PDF report and a separate infographic page provide layered information access. This structure prioritizes user flow. -->
+    <!-- Visualization & Content Choices: 
+        - Visi Misi (Text): Goal=Inform -> Viz=Key text blocks (HTML/CSS) -> Justification=Directly convey foundational concepts.
+        - Peta Jalan (Process): Goal=Change -> Viz=Interactive Timeline (JS/HTML/CSS) -> Justification=Clearly visualizes the program's progression over time. NO SVG/Mermaid.
+        - Komoditas Unggulan (Data): Goal=Compare -> Viz=Bar Chart (Chart.js) -> Justification=Effectively compares the potential value of different commodities. NO SVG.
+        - Analisis SWOT (Analysis): Goal=Organize -> Viz=Grid Layout (HTML/CSS) -> Justification=Classic, clear method to display strategic analysis. NO SVG.
+        - Ringkasan Media (Critique): Goal=Inform -> Viz=Players in Modals (JS/HTML/CSS) -> Justification=Provides deep-dive analysis without cluttering the main UI.
+        - Materi Lengkap & Infografis (Report): Goal=Inform -> Viz=Direct Link (HTML) -> Justification=Provides easy access to source documents in a new tab.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #5a5a5a;
+            white-space: nowrap;
+        }
+        .nav-link.active, .nav-link:hover {
+            background-color: #EAE7E2;
+            color: #2a2a2a;
+        }
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 450px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-4 z-40 flex justify-center mt-4">
+        <div class="container mx-auto px-4 flex justify-center">
+            <nav class="bg-white/70 backdrop-blur-lg p-3 rounded-full shadow-lg">
+                <ul class="flex items-center justify-center flex-wrap" id="main-nav">
+                    <li class="m-1"><a href="#pendahuluan" class="nav-link active text-sm md:text-base">Pendahuluan</a></li>
+                    <li class="m-1"><a href="#peta-jalan" class="nav-link text-sm md:text-base">Peta Jalan</a></li>
+                    <li class="m-1"><a href="#analisis" class="nav-link text-sm md:text-base">Analisis SWOT</a></li>
+                    <li class="m-1"><a href="#rekomendasi" class="nav-link text-sm md:text-base">Rekomendasi</a></li>
+                    <li class="m-1"><button id="audioNavBtn" class="nav-link text-sm md:text-base">Ringkasan Audio</button></li>
+                    <li class="m-1"><button id="videoNavBtn" class="nav-link text-sm md:text-base">Ringkasan Video</button></li>
+                    <li class="m-1"><a href="Kritik Dokumen OVOP NTT_ Analisis Mendalam.pdf" target="_blank" rel="noopener noreferrer" class="nav-link text-sm md:text-base">Materi Lengkap</a></li>
+                    <li class="m-1"><a href="INFOGRAFIS GRAND DESIGN OVOP NTT.html" target="_blank" rel="noopener noreferrer" class="nav-link text-sm md:text-base">Infografis</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8 pt-20">
+        <!-- Section: Pendahuluan -->
+        <section id="pendahuluan" class="section mb-16">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-[#3D3D3D] mb-3">Grand Design OVOP NTT</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Dasbor Interaktif untuk Analisis dan Visualisasi Program "One-Village One-Product" Nusa Tenggara Timur (2025-2029)</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm p-8">
+                 <h2 class="text-2xl font-bold text-[#3D3D3D] mb-6 text-center">Visi, Misi, dan Potensi Komoditas</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-[#B59F84]">Visi & Misi</h3>
+                        <p class="mb-4"><strong>Visi:</strong> Terwujudnya masyarakat desa di NTT yang mandiri, kreatif, inovatif, dan sejahtera melalui pengembangan produk unggulan yang berdaya saing.</p>
+                        <p><strong>Misi:</strong> Meningkatkan kualitas dan nilai tambah produk lokal, memperkuat kapasitas SDM dan kelembagaan, memperluas akses pasar, serta membangun kolaborasi pentahelix yang solid.</p>
+                    </div>
+                    <div class="chart-container h-[400px]">
+                        <canvas id="commodityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Peta Jalan -->
+        <section id="peta-jalan" class="section mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10 text-[#3D3D3D]">Peta Jalan Implementasi Program (2025-2029)</h2>
+            <div class="relative">
+                <div class="absolute left-1/2 h-full w-0.5 bg-gray-200"></div>
+                <div id="timeline-container" class="space-y-12">
+                    <!-- Timeline items will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Analisis SWOT -->
+        <section id="analisis" class="section mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10 text-[#3D3D3D]">Analisis SWOT Kritis</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Strengths -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-400">
+                    <h3 class="font-bold text-xl mb-3 text-green-700">Kekuatan (Strengths)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Kekayaan SDA & Budaya</li>
+                        <li>Keunikan produk lokal</li>
+                        <li>Komitmen Pemerintah</li>
+                    </ul>
+                </div>
+                <!-- Weaknesses -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-400">
+                    <h3 class="font-bold text-xl mb-3 text-red-700">Kelemahan (Weaknesses)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Keterbatasan kapasitas SDM</li>
+                        <li>Akses modal & teknologi</li>
+                        <li>Infrastruktur belum merata</li>
+                         <li>Struktur tata kelola gemuk</li>
+                    </ul>
+                </div>
+                <!-- Opportunities -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-400">
+                    <h3 class="font-bold text-xl mb-3 text-blue-700">Peluang (Opportunities)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Tren pariwisata & produk otentik</li>
+                        <li>Dukungan kebijakan nasional</li>
+                        <li>Potensi pasar digital</li>
+                    </ul>
+                </div>
+                <!-- Threats -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-yellow-400">
+                    <h3 class="font-bold text-xl mb-3 text-yellow-700">Ancaman (Threats)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Perubahan iklim</li>
+                        <li>Persaingan produk massal</li>
+                        <li>Target tidak realistis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Rekomendasi -->
+        <section id="rekomendasi" class="section mb-8">
+            <h2 class="text-3xl font-bold text-center mb-10 text-[#3D3D3D]">Rekomendasi Strategis</h2>
+            <div class="bg-white rounded-2xl shadow-sm p-8">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <h3 class="font-bold text-lg mb-2 text-[#B59F84]">1. Rampingkan Tata Kelola</h3>
+                        <p>Fokus pada tim kerja yang lebih ramping dan efektif untuk menghindari birokrasi berlebihan dan memastikan program benar-benar bottom-up.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <h3 class="font-bold text-lg mb-2 text-[#B59F84]">2. Target Bertahap & Realistis</h3>
+                        <p>Mulai dengan desa percontohan yang solid, evaluasi, baru kemudian perluas. Hindari target kuantitatif yang terlalu ambisius di awal.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <h3 class="font-bold text-lg mb-2 text-[#B59F84]">3. Fokus Pada Fondasi SDM</h3>
+                        <p>Alihkan sebagian besar sumber daya untuk pelatihan mendalam dan berkelanjutan pada manajemen dasar, kualitas produk, dan literasi digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Audio Modal -->
+    <div id="audioModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div id="audioModalContent" class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative transform transition-all scale-95 opacity-0">
+            <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-3xl leading-none">&times;</button>
+            <h3 class="text-2xl font-bold text-[#3D3D3D] mb-4">Ringkasan Audio Kritis</h3>
+            <p class="text-gray-600 mb-6">Dengarkan analisis mendalam mengenai tata kelola dan target Grand Design OVOP NTT.</p>
+            <audio class="w-full" controls>
+                <source src="Kritik Pedas Grand Design OVOP NTT 2025-2030_ Tata Kelola Gemuk dan Target Lompat Tanpa Fondasi.mp3" type="audio/mpeg">
+                Browser Anda tidak mendukung elemen audio.
+            </audio>
+        </div>
+    </div>
+    
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div id="videoModalContent" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full relative transform transition-all scale-95 opacity-0">
+            <button id="closeVideoModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-3xl leading-none">&times;</button>
+            <h3 class="text-2xl font-bold text-[#3D3D3D] mb-4">Ringkasan Video Program</h3>
+            <p class="text-gray-600 mb-6">Tonton ringkasan visual dari Grand Design OVOP NTT untuk mendapatkan pemahaman yang komprehensif.</p>
+            <video class="w-full rounded-lg" controls>
+                <source src="Rencana_Besar_untuk_NTT.mp4" type="video/mp4">
+                Browser Anda tidak mendukung tag video.
+            </video>
+        </div>
+    </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('a.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    const commodityCtx = document.getElementById('commodityChart').getContext('2d');
+    new Chart(commodityCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Tenun Ikat', 'Kopi', 'Garam', 'Moringa (Kelor)', 'Bambu', 'Sapi'],
+            datasets: [{
+                label: 'Potensi Nilai (dalam Miliar Rp/Tahun)',
+                data: [120, 95, 75, 85, 60, 150],
+                backgroundColor: '#B59F84',
+                borderColor: '#9D866B',
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Potensi Nilai (Miliar Rupiah)' }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Potensi Ekonomi Komoditas Unggulan NTT', font: { size: 16 } },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) { return label.join(' '); } 
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const timelineData = [
+        { year: '2025', title: 'Fondasi & Pemetaan', desc: 'Identifikasi 50 desa percontohan, sosialisasi program, dan pembentukan tim kerja.', side: 'left' },
+        { year: '2026', title: 'Pengembangan Kapasitas', desc: 'Pelatihan teknis produksi, manajemen mutu, dan pendampingan intensif.', side: 'right' },
+        { year: '2027', title: 'Kualitas & Akses Pasar', desc: 'Fasilitasi sertifikasi, pengembangan branding, dan kemitraan pasar lokal.', side: 'left' },
+        { year: '2028', title: 'Perluasan & Digitalisasi', desc: 'Ekspansi ke 50 desa baru dan pelatihan pemasaran digital.', side: 'right' },
+        { year: '2029', title: 'Keberlanjutan & Inovasi', desc: 'Penguatan kelembagaan, inovasi produk, dan promosi nasional.', side: 'left' },
+    ];
+
+    const timelineContainer = document.getElementById('timeline-container');
+    timelineData.forEach(item => {
+        const isLeft = item.side === 'left';
+        const timelineElement = document.createElement('div');
+        timelineElement.className = `relative flex items-center ${isLeft ? 'justify-start' : 'justify-end'}`;
+        timelineElement.innerHTML = `
+            <div class="${isLeft ? 'pr-8 text-right' : 'pl-8 text-left'} w-1/2">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <p class="font-bold text-lg text-[#3D3D3D]">${item.year} - ${item.title}</p>
+                    <p class="text-sm text-gray-600">${item.desc}</p>
+                </div>
+            </div>
+            <div class="absolute w-5 h-5 bg-[#B59F84] rounded-full z-10" style="left: 50%; transform: translateX(-50%);"></div>
+        `;
+        timelineContainer.appendChild(timelineElement);
+    });
+    
+    // Audio Modal Logic
+    const audioNavBtn = document.getElementById('audioNavBtn');
+    const audioModal = document.getElementById('audioModal');
+    const audioModalContent = document.getElementById('audioModalContent');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const audioPlayer = audioModal.querySelector('audio');
+    
+    audioModalContent.classList.add('transition-all', 'duration-300', 'ease-in-out');
+
+    function openModal() {
+        audioModal.classList.remove('hidden');
+        setTimeout(() => {
+            audioModalContent.classList.remove('scale-95', 'opacity-0');
+            audioModalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeModal() {
+        audioModalContent.classList.remove('scale-100', 'opacity-100');
+        audioModalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            audioModal.classList.add('hidden');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        }, 300);
+    }
+
+    audioNavBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    audioModal.addEventListener('click', (event) => {
+        if (event.target === audioModal) {
+            closeModal();
+        }
+    });
+
+    // Video Modal Logic
+    const videoNavBtn = document.getElementById('videoNavBtn');
+    const videoModal = document.getElementById('videoModal');
+    const videoModalContent = document.getElementById('videoModalContent');
+    const closeVideoModalBtn = document.getElementById('closeVideoModalBtn');
+    const videoPlayer = videoModal.querySelector('video');
+
+    videoModalContent.classList.add('transition-all', 'duration-300', 'ease-in-out');
+
+    function openVideoModal() {
+        videoModal.classList.remove('hidden');
+        setTimeout(() => {
+            videoModalContent.classList.remove('scale-95', 'opacity-0');
+            videoModalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeVideoModal() {
+        videoModalContent.classList.remove('scale-100', 'opacity-100');
+        videoModalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            videoModal.classList.add('hidden');
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+        }, 300);
+    }
+
+    videoNavBtn.addEventListener('click', openVideoModal);
+    closeVideoModalBtn.addEventListener('click', closeVideoModal);
+    videoModal.addEventListener('click', (event) => {
+        if (event.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>
+
